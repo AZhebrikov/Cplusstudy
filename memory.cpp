@@ -1,14 +1,15 @@
 #include<iostream>
 
-int main(){
-    int* p = new int;
-    int a = 0;
-
-    std::cout << &a << '\n';
+void f(){
+    int* p = new int(5);
     std::cout << p << '\n';
+    //delete p
+} 
 
-    int* pa = new int[1000];
-    delete[] pa;
-    delete p;
+int main(){
+    while(true){
+         f();
+    }
 }
+
 
