@@ -3,10 +3,13 @@
 
 int main(){
     
-	int* a = new int[100];
-	delete[] a; 
+	int n;
+	std::cin >> n;
 
-	std::vector<int> v(10);
-	delete &v[0];
+	// variable lenght array
+	int a[n];
+	for(int i = 0; i<n; ++i){
+		a[i] = i;
+	}
 }
 
