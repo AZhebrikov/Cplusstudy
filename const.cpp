@@ -3,22 +3,18 @@
 int main(){
 
 	int x = 5;
-	int y = 6;
-	int* p = &x;
+	const int& r = x;
+	++x; // Ok
 	
-	const int* pc = p;//константный инт, лежащий под указателем
-	pc = &y;
-	*pc = y; // CE
+	r = 5;//CE
+	++r; //CE
+	
+	int& const cr = x; //CE, так как ссылка по природе неизменна.
+	
+	int& r2 = r;//CE
 
-	int* const cp = p;//константный указатель
-	cp = &y; // CE
-	*cp = y;
-
-	const int* t = p; //int* -> const int*
-	int* t2 = t; // CE
-
-	int z = 2;
-	const int* pz = &z;
-	++z;//ok
+	const int y = 0;
+	int& y2 = y;//CE
+	// const потерять нельзя нигде по дороге.
 
 }
