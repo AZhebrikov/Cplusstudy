@@ -1,15 +1,15 @@
 #include<iostream>
 #include<vector>
 
-int main(){
-    
-	int n;
-	std::cin >> n;
+void f(int**){}
+void f(int(*)[5]){}
+void f(int* [5]){}
+// 1 and 3 equivalent -> redifinition error
 
-	// variable lenght array
-	int a[n];
-	for(int i = 0; i<n; ++i){
-		a[i] = i;
-	}
+int main(){
+
+    int* b[5]; //array of 5 pointers to int	
+
+    int (*c)[5]; //Pointer to array of 5 ints
 }
 
