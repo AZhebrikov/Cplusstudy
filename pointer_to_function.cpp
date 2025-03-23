@@ -1,13 +1,10 @@
 #include<iostream>
 #include<algorithm>
 
-void f(int){}
-void f(double){}
-
 int main(){
 
-	void (*p1)(int) = f;
-	void (*p2)(double) = f;
+	void (*pf)(int); // pointer to function which takes int, returns void
+	void (* pfa[10])(int); //arrays of 10 pointers to function which takes int, returns void
 
-	std::cout << (void*)p1 << ' ' << (void*)p2 << '\n';
+	void (*(*pff[10])(int))(int); // arrays of 10 pointers to function which takes int, returns pointer to function, which takes int, returns void
 }
