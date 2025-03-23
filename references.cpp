@@ -1,14 +1,35 @@
 #include<iostream>
 
+int& f(int& x){
+	return x++;
+}//error
+
+int& g(int x){
+	int& y = x;
+	return y;
+}//error
+
+int& h(){
+	static int y = 0;
+	return y;
+}//ok
+
+int& t(){
+	int* p = new int(1);
+	return *p;
+}//ok
+
 int main(){
+	int x = 0;
+	int& y = f(x);
+	int& yy = g(x);
+	int& yyy = h();
 
-	// int &x; нельзя создать не проинициализированную ссылку
-	// int& = 5; нельзя взять ссылку на временный обЪект
-	// 
-	// int x = 5;
-	// int& y = x++; error
+	int& yyyy = t();
+	delete &yyyy;
+	//ok
 	
-	int x = 5;
-	int& y = ++x;
+	int yyyyy = t();
+	delete &yyyyy;
+	// seg. fault error
 }
-
