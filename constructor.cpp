@@ -1,42 +1,34 @@
 #include<iostream>
+#include<cstring>
 
-class Complex{
-	double re = 0.0;
-	double im = 0.0;
-
-	/* version 1
-	Comlex(double real){
-		re = real;
-	}
-
-	Complex(double re){
-		this->re = re;
-	}
-	такой способ выглядет логичным, но на самом деле это плохой способ инициализации полей, так как на самом деле
-	перед входом в тело конструктора все поля уже должны были быть созданы и проинициализированы по уолчанию. То есть 
-	в нашем случае сначала создадутся два int-a, проинициализируются нулями, а после этого произойдет присваивание.
-	*/
-	
-	//member initializer lists 
-	//- придумано для того, чтобы сразу инициализировались поля нужными значениями
+class String{
+	char* arr = nullptr;
+	size_t sz = 0;
+	size_t cap = 0;
 public:
-	Complex(double re): re(re) {}
-	Complex(double re, double im);
+	String(){} //default constructor
+	
+	String(size_t n, char c): arr(new char[n+1]), sz(n), cap(n+1){
+		std::memset(arr, c, n);
+		arr[sz] = '\0';
+		std::cout << 1 << '\n';
+	}// Пример нетривиального конструктора.
+	
+	String(std::initializer_list<char> list)
+			: arr(new char[list.size() + 1])
+			, sz(list.size())
+			, cap(sz + 1) {
+	 	std::copy(list.begin(), list.end(), arr);
+		arr[sz]='\0';
+		std::cout << 2 << '\n';
+	}
 };
-
-Complex::Complex(double re, double im): re(re), im(im) {}
-// Заметим, что поля будут инициализироваться строго по порядку в классе, поэтому даже если вы поменяете их порядок в 
-// member initializer list, их реальный порядок инициализации не измениться, а компилятор вам кинет предупреждение.
-
 
 int main(){
 
-	// разные способы инициализации
-	Complex c(5.0);
-	Complex c2 = 6.0;
-	Complex c3{7.0};
-	Complex c4 = {8.0};
-
-	Complex c5{1,3}; // Это уже не агрегатная инициализация, как только появляется в классе(структуре) конструктор,
-			 // агрег. инициал. не работает 
+	String v; //default initialization
+	
+	String s1{2, 'a'};
+	String s2{'a', 'b', 'c', 'd', 'f'};
 }
+
