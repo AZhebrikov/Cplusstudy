@@ -3,6 +3,6 @@
 
 int main(){
     std::vector<int> v(10);
-    v.at(10) = 1;
+    v[-1] = 10000;
 }
 
