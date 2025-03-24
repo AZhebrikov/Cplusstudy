@@ -2,12 +2,8 @@
 #include<vector>
 
 int main(){
-    std::vector<int> v(10);
-    v[10] = 1; // UB
-
-    int x;
-    std::cout << x; //UB
-
-    x++ + ++x; //UB
+    for(int i = 0; i < 300; ++i){
+        std::cout << i << ' ' <<i*12345678 << std::endl;
+    }
 }
 
