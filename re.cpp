@@ -1,8 +1,8 @@
 #include<iostream>
-#include<vector>
 
 int main(){
-    std::vector<int> v(10);
-    v[5'000]=1;
+    int y;
+    std::cin >> y;
+    std::cout << 5 / y;
 }
 
