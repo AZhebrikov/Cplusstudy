@@ -1,22 +1,27 @@
 #include<iostream>
 
-struct S {
-        static int x;// Запрещена внутриклассовая инициализация non-const static переменных
-        // Идейно это так для того, чтобы при инклюдах не было проблем, так как объявлять можно 
-        // много раз, а вот объявлять один.
+struct Singleton {
+private:
+        static Singleton* ptr;
 
-        static void f() {
-                std::cout << "Hi" << '\n';
+        Singleton() {}
+        Singleton(const Singleton&) = delete;
+        Singleton& operator=(const Singleton&) = delete;
+
+public:
+        static Singleton& getObject() {
+                if (ptr == nullptr) {
+                        ptr = new Singleton();
+                }
+                return *ptr;
         }
+
+
 };
-int S::x = 1;
-// статические методы относятся не к конкретному объекту, а к самому классу.
-// статические переменные имеют такой же смысловой характер, однако по ним становится понятен
-// мотив их названия. Память под эти переменные будет учтена на момент компиляции программы,
-// и при ее запуске сразу веделена. Как и с обычными статическими переменными.
-// Практически для статических переменных и функции структура или класс являются namespace-ами,
-// поэтому к им можно обрашаться и не создавая объект. 
+Singleton* Singleton::ptr = nullptr;
 
 int main() {
-        S::f();
+
+        Singleton& s = Singleton::getObject();
+
 }
