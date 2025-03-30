@@ -1,5 +1,6 @@
 #include "iostream"
 #include <condition_variable>
+#include <ostream>
 
 struct Complex {
     double re = 0.0;
@@ -21,29 +22,28 @@ struct Complex {
     }
 };
 
-//version 1
 Complex operator+(const Complex& a, const Complex& b) {
     Complex result = a;
     result += b;
     return result;
 }
 
-//version 2
-//Complex operator+(const Complex& a, const Complex& b) {
-//    Complex result = a;
-//    return result += b;
-//}
+std::ostream& operator<<(std::ostream& out, const Complex&  b);
+std::istream& operator>>(std::istream& in, Complex& b);
 
-//version 3
-//Complex operator+(Complex a, const Complex& b) {
-//    result a += b;
-// }
+bool operator<(const Complex& a, const Complex& b) {
+    return a.re < b.re || a.re == b.re && a.im < b.im ;
+}
 
-//Эти версии кажуться более лаконичными и правильными, однако они будут работать медленнее, 
-//так как для них, в отличии от нашего случая, компилятор умеет проводить return value optimization.
-//Такую оптимизацию он умеет делать только в случае, когда возвращается просто локальное значение, созданное внутри функции и не
-//окруженное  expression. Он обойдется без копирования, сразу сохраняя данные не за концом стека а в
-// нужную переменную.
+bool operator>(const Complex& a, const Complex& b) {
+    return b < a; // не надо писать отрицание факта a <= b, так как вероятно будет проделано 
+                  // в два раза больше действий. Достаточно просто поменять аргументы местами и все.
+}
+
+bool operator<=(const Complex& a, const Complex& b) {
+    return !(a > b);
+}//  и так далее ...
+
 int main() {
 
 }
