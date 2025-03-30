@@ -1,27 +1,32 @@
 #include<iostream>
 
-struct Singleton {
-private:
-        static Singleton* ptr;
-
-        Singleton() {}
-        Singleton(const Singleton&) = delete;
-        Singleton& operator=(const Singleton&) = delete;
-
-public:
-        static Singleton& getObject() {
-                if (ptr == nullptr) {
-                        ptr = new Singleton();
-                }
-                return *ptr;
-        }
-
-
+struct Latitude {
+        double value;
+        explicit Latitude(double value): value(value) {}
+       
+        explicit operator double() const {
+                return value;
+        }// Запретили неявную конверсию и в обратную сторону. Чтобы его вызвать нужно сделать 
+         // static_cast. Он рассматривает как раз все стандартные конверсии и ваши созданные.
 };
-Singleton* Singleton::ptr = nullptr;
+
+struct Longitude {
+        double value;
+        explicit Longitude(double value): value(value) {}
+};
+
+//Представьте, что у вас работа связана с картами. И вы написали функционал, который принимает на вход широту и долготу точки.
+// Но вот проблема, и то, и другое есть double. Поэтому вы каждый раз путоетесь, что нужно отправить. Чтобы избежать 
+// ошибки отправить данные не в том порядке, вы пишите две структуры обертки double, и уже на стадии компиляции проверяете 
+// правильность порядка. Как это сделвть? Чтобы сохранить возможность  работать с double вы пишите конструкторы типов от double,
+// но делаете их явными методами. Это значит, что если вы захотите вызвать функцию, и отправить два double, компилятор вам скажет нет,
+// так как ему придеться сделать неявную конверсию, что вы запретили. Поэтому вам явно придется указать, что вы подрузомеваете 
+// Longitude или Latitude, таким образом вы не совершите ошибку.
+
+//ТОНКОСТЬ!!! делать конвертацию в bool нужно explicit. Может показаться, что как тогда будут преобразовываться типы выражений
+// в bool под if-ом, однако на самом деле там присутсвует костыль, там происходит не обычная конвертация, а contextual conversion.
+// Такая происходит под if-ом, while-ом и тернарном операторе. И вот эта конвертация будет рассматривать и ваши explicit методы.
 
 int main() {
-
-        Singleton& s = Singleton::getObject();
 
 }
